@@ -5,6 +5,13 @@ spring:
     url: jdbc:postgresql://localhost:5432/angular-pizza
     username: postgres
     password: root
-  liquibase:
-    change-log: db/master.xml
-
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
