@@ -39,6 +39,9 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register(RegisterRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("This email address is busy");
+        }
         User user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
