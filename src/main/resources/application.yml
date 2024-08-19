@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: pizza
+  datasource:
+    url: jdbc:postgresql://localhost:5432/angular-pizza
+    username: postgres
+    password: root
+  liquibase:
+    change-log: db/master.xml
+
