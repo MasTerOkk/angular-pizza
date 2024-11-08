@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import ru.capybara.pizza.dto.AuthRequest;
 import ru.capybara.pizza.dto.AuthenticationResponse;
 import ru.capybara.pizza.dto.RegisterRequest;
+import ru.capybara.pizza.exception.EmailIsBusyException;
+import ru.capybara.pizza.exception.UserNotFoundException;
 import ru.capybara.pizza.model.Role;
 import ru.capybara.pizza.model.User;
 import ru.capybara.pizza.repository.UserRepository;
@@ -31,7 +33,9 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(
+                UserNotFoundException::new
+        );
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -40,7 +44,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("This email address is busy");
+            throw new EmailIsBusyException(request.getEmail());
         }
         User user = User.builder()
                 .firstname(request.getFirstname())

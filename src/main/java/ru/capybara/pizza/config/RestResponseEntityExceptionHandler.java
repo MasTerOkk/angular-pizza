@@ -8,6 +8,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.capybara.pizza.exception.CustomException;
 import ru.capybara.pizza.exception.CustomErrorResponse;
 
+import java.time.LocalDateTime;
+
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
@@ -16,7 +18,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                 .message(ex.getMessage())
                 .errorDescription(ex.getErrorDescription())
                 .status(ex.getStatus())
-                .time(ex.getTime())
+                .time(LocalDateTime.now())
                 .build();
         return ResponseEntity.status(ex.getStatus()).body(error);
     }
