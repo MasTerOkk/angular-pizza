@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.capybara.pizza.exception.CustomException;
 import ru.capybara.pizza.exception.TestException;
 
 @RestController
@@ -20,8 +19,9 @@ public class TestController {
     @GetMapping("/err")
     public ResponseEntity<String> getError(@RequestParam boolean flag) {
         if (flag) {
+            throw new RuntimeException("No no no mister fish");
+        } else {
             throw new TestException(1);
         }
-        return ResponseEntity.ok("No exception");
     }
 }
