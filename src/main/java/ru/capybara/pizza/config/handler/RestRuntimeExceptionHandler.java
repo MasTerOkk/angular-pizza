@@ -1,4 +1,4 @@
-package ru.capybara.pizza.config;
+package ru.capybara.pizza.config.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
